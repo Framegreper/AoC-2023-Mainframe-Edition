@@ -1,0 +1,57 @@
+/* rexx */
+/* Description of Programm */
+
+/* Input and attributes*/
+input = .stream~new('day02.txt')~arrayIn
+
+/* loadout of bag */
+red = 12
+green = 13
+blue = 14
+/*                */
+
+possibilities = 0
+
+/*Main loop */ 
+do line over input
+  line = translate(line,'_', ' ')
+  parse var line "Game_"game":" rest
+  ispossible = 1                  /* everything is possible */
+  rest = translate(rest,' ',';')
+  
+  do set = 1 to words(rest)
+    cubedata = translate(word(rest,set),' ',',')
+    cubes = words(cubedata)
+    do cube = 1 to cubes
+      cd = word(cubedata,cube)
+      parse var cd "_" amount "_" color
+      
+      if color = 'red' & amount > red then do
+        ispossible = 0
+        say "too many reds"
+        leave /* Schleife verlassen, sobald Bedingung verletzt ist */
+      end
+      if color = 'green' & amount > green then do
+        ispossible = 0
+        say "too many greens"
+        leave /* Schleife verlassen, sobald Bedingung verletzt ist */
+      end
+      if color = 'blue' & amount > blue then do
+        ispossible = 0
+        say "too many blues"
+        leave /* Schleife verlassen, sobald Bedingung verletzt ist */
+      end
+    end
+  end
+  
+  if ispossible = 1 then do
+    possibilities = possibilities + game /* Summe der IDs der möglichen Spiele */
+  end
+  
+end
+
+
+
+/* solution of Task*/
+part_1:
+say say 'Sum of IDs for possible games:' possibilities

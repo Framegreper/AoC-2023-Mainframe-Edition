@@ -1,0 +1,45 @@
+/* REXX */
+/* Input and attributes*/
+x = bpxwunix('cat /z/z35259/AoC23Input/input2.txt',,file.,se.)
+
+/* loadout of bag */
+red = 12
+green = 13
+blue = 14
+/*                */
+
+possibilities =
+sumpow = 0
+
+/*Main loop */
+do line over input
+  line = translate(line,'_', ' ')
+  say line
+  parse var line "Game_"game":" rest
+  /* all game data is in 'rest' */
+  lg = 0
+  lr = 0
+  lb = 0
+  rest = translate(rest,' ',';')
+  do set = 1 to words(rest)
+    /* Another set-> _1_red,_2_green,_6_blue */
+    cubedata = translate(word(rest,set),' ',',')
+    cubes = words(cubedata)
+    do cube = 1 to cubes
+      cd =word(cubedata,cube)
+      parse var cd  "_"amount"_"color
+      if color = 'red' & amount > lr  then lr = amount
+      if color = 'green' & amount > lg then lg = amount
+      if color = 'blue' & amount > lb then lb = amount
+    end
+  end
+  pow3 = lg * lr * lb
+  sumpow = sumpow + pow3
+end
+
+
+/* solution of Task*/
+part_1:
+say say 'Sum of IDs for possible games:' possibilities
+part_2:
+say sumpow

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class T2 {
+public class D2P1 {
 
     // Variablen für die verfügbare Anzahl von Würfeln jeder Farbe
     private static final Map<String, Integer> availableCubes = new HashMap<>();
