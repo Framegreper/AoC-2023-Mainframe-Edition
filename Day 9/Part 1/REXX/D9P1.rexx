@@ -8,56 +8,56 @@ lineNum = 0
 /* Read the file into the line. stem variable */
 'EXECIO * DISKR' filename '(FINIS STEM line. F' lineNum
 do i = 1 to lineNum
-    invoer.i = line.i
+    input.i = line.i
 end
-invoer.0 = lineNum
+input.0 = lineNum
 
 numeric digits 31
 
-antwoord = 0
-do i = 1 to invoer.0
-   reeks.0 = 1
+answer = 0
+do i = 1 to input.0
+   series.0 = 1
    k = 1
-   reeks.k = invoer.i
+   series.k = input.i
    do forever
-      vorige = reeks.k
+      previous = series.k
       k = k + 1
-      reeks.k = verschil(vorige)
-      getal = bottom(reeks.k)
-      if getal <> -1 then do
+      series.k = difference(previous)
+      number = lowest(series.k)
+      if number <> -1 then do
          do z = k - 1 to 1 by -1
-            nieuw_getal = word(reeks.z,words(reeks.z)) + getal
-            reeks.z = reeks.z||' '||nieuw_getal
-            getal = nieuw_getal
+            new_number = word(series.z,words(series.z)) + number
+            series.z = series.z||' '||new_number
+            number = new_number
          end
-         antwoord = antwoord + getal
+         answer = answer + number
          leave
       end
    end
 end
-say antwoord
+say answer
 exit
 
-bottom: procedure
-arg invoer
-do while invoer <> ""
-   parse var invoer eerste tweede invoer
-   if tweede = "" then return eerste
-   if eerste <> tweede then return -1
+lowest: procedure
+arg input
+do while input <> ""
+   parse var input first second input
+   if second = "" then return first
+   if first <> second then return -1
 end
-return eerste
+return first
 
-verschil: procedure
-arg invoer
+difference: procedure
+arg input
 k = 0
-do while invoer <> ""
+do while input <> ""
    k = k + 1
-   parse var invoer getal.k invoer
+   parse var input number.k input
 end
-getal.0 = k
-uitvoer = ""
-do i = 1 to getal.0 - 1
+number.0 = k
+output = ""
+do i = 1 to number.0 - 1
    k = i + 1
-   uitvoer = uitvoer||getal.k - getal.i||' '
+   output = output||number.k - number.i||' '
 end
-return uitvoer
+return output
